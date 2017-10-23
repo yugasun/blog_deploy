@@ -21,9 +21,11 @@ handler.on('push', function (event) {
   console.log('Received a push event for %s to %s',
     event.payload.repository.name,
     event.payload.ref)
-  runCommand('sh', ['./auto_build.sh'], function (txt) {
-    console.log(txt)
-  })
+  if (event.payload.ref === 'refs/heads/master') {
+      runCommand('sh', ['./auto_build.sh'], function (txt) {
+      console.log(txt)
+    })
+  }
 })
 function runCommand (cmd, args, callback) {
   var child = spawn(cmd, args)
@@ -31,11 +33,11 @@ function runCommand (cmd, args, callback) {
   child.stdout.on('data', function (buffer) { response += buffer.toString() })
   child.stdout.on('end', function () { callback(response) })
 }
-// 由于我们不需要监听issues，所以下面代码注释掉
-//  handler.on('issues', function (event) {
-//    console.log('Received an issue event for %s action=%s: #%d %s',
-//      event.payload.repository.name,
-//      event.payload.action,
-//      event.payload.issue.number,
-//      event.payload.issue.title)
-// });
+
+handler.on('issues', function (event) {
+    console.log('Received an issue event for %s action=%s: #%d %s',
+      event.payload.repository.name,
+      event.payload.action,
+      event.payload.issue.number,
+      event.payload.issue.title)
+});
