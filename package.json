@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "github-webhook-handler": "^0.6.0"
+  }
+}
