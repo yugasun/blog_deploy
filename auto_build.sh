@@ -5,4 +5,4 @@ cd $SITE_PATH
 git reset --hard origin/master
 git clean -f
 git pull origin master
-yarn && hexo generate
+yarn && yarn gen
