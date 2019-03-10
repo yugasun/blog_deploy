@@ -22,8 +22,13 @@ handler.on('push', function (event) {
     event.payload.repository.name,
     event.payload.ref)
   if (event.payload.ref === 'refs/heads/master') {
-      runCommand('sh', ['./auto_build.sh'], function (txt) {
+    runCommand('sh', ['./auto_build.sh'], function (txt) {
       console.log(txt)
+    })
+  }
+  if (event.payload.ref === 'refs/heads/blog') {
+    runCommand('sh', ['./auto_build.sh'], function (txt) {
+     console.log(txt)
     })
   }
 })
